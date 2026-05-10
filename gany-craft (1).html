@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gany Craft Space Solutions — Design. Build. Transform.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  /* Brand palette inspired by logo: deep navy-slate + warm sand/beige */
+  :root {
+    --black: #0d1117;
+    --charcoal: #161d26;
+    --surface: #1c2533;
+    --card: #212e3d;
+    --slate: #2e3a47;
+    --accent: #c8b89a;
+    --accent-light: #e2d5c0;
+    --accent-dim: rgba(200,184,154,0.15);
+    --silver: #a8b4c0;
+    --beige: #f0ebe2;
+    --text: #ddd8d0;
+    --muted: #6e7e8e;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(200,184,154,0.18);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
+  ::-webkit-scrollbar{width:4px}
+  ::-webkit-scrollbar-track{background:var(--black)}
+  ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5vw;height:72px;display:flex;align-items:center;justify-content:space-between;-webkit-backdrop-filter:blur(24px) saturate(1.5);backdrop-filter:blur(24px) saturate(1.5);background:rgba(13,17,23,0.7);border-bottom:1px solid var(--glass-border);transition:all .4s ease}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo-icon{width:36px;height:36px;flex-shrink:0}
+  .logo-text{display:flex;flex-direction:column;line-height:1}
+  .logo-text-main{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;font-weight:600;color:var(--accent-light);letter-spacing:.03em}
+  .logo-text-main span{font-style:normal;font-weight:300}
+  .logo-text-sub{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--silver);margin-top:2px}
+  .nav-links{display:flex;gap:2.5rem;list-style:none}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;transition:color .3s;position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s ease}
+  .nav-links a:hover{color:var(--accent)}
+  .nav-links a:hover::after{width:100%}
+  .nav-cta{padding:10px 24px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .3s ease;text-decoration:none}
+  .nav-cta:hover{background:var(--accent);color:var(--black)}
+
+  /* HERO */
+  .hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(46,58,71,.5) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 20% 80%,rgba(200,184,154,.06) 0%,transparent 50%),linear-gradient(135deg,#0d1117 0%,#161d26 50%,#0d1117 100%)}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,184,154,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,184,154,.04) 1px,transparent 1px);background-size:80px 80px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,black,transparent);mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,black,transparent)}
+  .hero-room{position:absolute;right:-5%;top:50%;transform:translateY(-50%);width:55%;height:85%;opacity:.8}
+  .room-floor{position:absolute;bottom:0;left:10%;right:0;height:45%;background:linear-gradient(170deg,#1a1e24 0%,#232930 60%,#0e1016 100%);transform:perspective(600px) rotateX(12deg);transform-origin:bottom}
+  .room-wall-back{position:absolute;top:0;left:10%;right:0;height:60%;background:linear-gradient(180deg,#181e26 0%,#1e2630 100%)}
+  .room-wall-side{position:absolute;top:0;left:0;width:12%;height:100%;background:linear-gradient(90deg,#111520 0%,#181e28 100%);transform:perspective(400px) rotateY(-5deg)}
+  .ceiling-light{position:absolute;top:5%;left:50%;transform:translateX(-50%);width:2px;height:20%;background:linear-gradient(180deg,rgba(200,184,154,.4) 0%,transparent 100%)}
+  .ceiling-light::before{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:220px;height:220px;background:radial-gradient(ellipse at top,rgba(200,184,154,.12) 0%,transparent 70%)}
+  .ceiling-fixture{position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:8px;background:linear-gradient(90deg,#2e3a47,var(--accent),#2e3a47);border-radius:2px;box-shadow:0 4px 20px rgba(200,184,154,.3)}
+  .sofa{position:absolute;bottom:28%;left:15%;right:5%;height:22%}
+  .sofa-body{position:absolute;bottom:0;left:5%;right:5%;height:65%;background:linear-gradient(135deg,#2a3040 0%,#38404e 60%,#2a3040 100%);border-radius:8px 8px 0 0;box-shadow:0 -8px 30px rgba(200,184,154,.06),0 20px 40px rgba(0,0,0,.6)}
+  .sofa-back{position:absolute;top:0;left:3%;right:3%;height:55%;background:linear-gradient(135deg,#32394a 0%,#424c5e 100%);border-radius:6px 6px 0 0}
+  .sofa-cushion{position:absolute;bottom:65%;left:18%;right:18%;height:30%;background:linear-gradient(135deg,rgba(200,184,154,.12) 0%,rgba(200,184,154,.06) 100%);border:1px solid rgba(200,184,154,.2);border-radius:4px}
+  .particles{position:absolute;inset:0;pointer-events:none}
+  .particle{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--accent);animation:float-particle linear infinite;opacity:0}
+  @keyframes float-particle{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:.5}90%{opacity:.15}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
+  .hero-content{position:relative;z-index:2;padding:0 5vw;max-width:660px}
+  .hero-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,9vw,8rem);line-height:.92;letter-spacing:.02em;color:var(--beige);animation:fadeUp .8s ease .4s both}
+  .hero-headline em{font-style:normal;background:linear-gradient(135deg,var(--accent) 0%,var(--accent-light) 50%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{margin-top:1.5rem;font-size:1rem;line-height:1.7;color:var(--muted);max-width:440px;animation:fadeUp .8s ease .6s both}
+  .hero-actions{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s ease .8s both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .btn-primary{padding:16px 36px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent-light) 100%);color:var(--black);font-family:'DM Sans',sans-serif;font-weight:500;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s ease}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,184,154,.3)}
+  .btn-secondary{padding:16px 36px;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(232,226,217,.2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s ease}
+  .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-secondary svg{transition:transform .3s}
+  .btn-secondary:hover svg{transform:translateX(4px)}
+  .hero-scroll{position:absolute;bottom:2.5rem;left:5vw;display:flex;align-items:center;gap:12px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);animation:fadeUp .8s ease 1.2s both}
+  .scroll-line{width:40px;height:1px;background:linear-gradient(90deg,var(--accent),transparent);position:relative;overflow:hidden}
+  .scroll-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--accent);animation:slide-line 2s ease infinite}
+  @keyframes slide-line{0%{left:-100%}100%{left:100%}}
+  .hero-stats{position:absolute;right:5vw;bottom:10%;display:flex;gap:2px;animation:fadeUp .8s ease 1s both}
+  .stat-card{padding:20px 24px;background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid var(--glass-border);text-align:center;min-width:100px}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--accent);line-height:1}
+  .stat-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+  /* SECTIONS */
+  section{padding:7rem 5vw}
+  .section-label{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:12px}
+  .section-label::before{content:'';width:30px;height:1px;background:var(--accent)}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:600;line-height:1.15;color:var(--beige)}
+  .section-title em{font-style:italic;color:var(--accent)}
+
+  /* SERVICES */
+  .services{background:var(--charcoal)}
+  .services-intro{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;gap:2rem;flex-wrap:wrap}
+  .services-desc{max-width:360px;color:var(--muted);line-height:1.8;font-size:.95rem}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5px}
+  .service-card{background:var(--surface);position:relative;overflow:hidden;cursor:pointer;transition:transform .4s cubic-bezier(.25,.46,.45,.94);border:1px solid transparent}
+  .service-img{width:100%;height:200px;overflow:hidden;position:relative}
+  .service-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;filter:brightness(.75) saturate(.9)}
+  .service-card:hover .service-img img{transform:scale(1.06);filter:brightness(.85) saturate(1.05)}
+  .service-img-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(22,29,38,.8) 0%,transparent 60%)}
+  .service-body{padding:1.8rem 2rem 2rem;position:relative}
+  .service-card::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-light));transition:width .4s ease}
+  .service-card:hover{transform:translateY(-6px);border-color:var(--glass-border);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+  .service-card:hover::after{width:100%}
+  .service-num{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.15em;color:var(--accent);opacity:.5;margin-bottom:.5rem}
+  .service-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--beige);margin-bottom:.6rem}
+  .service-desc{font-size:.84rem;line-height:1.7;color:var(--muted)}
+  .service-learn{margin-top:1.2rem;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);opacity:0;transform:translateX(-10px);transition:all .3s;display:flex;align-items:center;gap:8px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0}
+  .service-card:hover .service-learn{opacity:1;transform:translateX(0)}
+
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(13,17,23,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .4s ease}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal-box{background:var(--surface);border:1px solid var(--glass-border);max-width:820px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform .3s}
+  .modal-overlay.open .modal-box{transform:translateY(0)}
+  .modal-img{width:100%;height:300px;object-fit:cover;filter:brightness(.8)}
+  .modal-content{padding:2.5rem}
+  .modal-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}
+  .modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--beige);margin-bottom:1rem}
+  .modal-desc{font-size:.95rem;line-height:1.8;color:var(--muted);margin-bottom:1.5rem}
+  .modal-img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:1.5rem}
+  .modal-img-grid img{width:100%;height:110px;object-fit:cover;filter:brightness(.8);transition:filter .3s}
+  .modal-img-grid img:hover{filter:brightness(1)}
+  .modal-features{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:2rem}
+  .modal-feat{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--text)}
+  .modal-feat::before{content:'✦';color:var(--accent);font-size:.65rem;flex-shrink:0}
+  .modal-close{position:absolute;top:1.2rem;right:1.2rem;width:40px;height:40px;background:var(--glass);border:1px solid var(--glass-border);color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+  .modal-close:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* PORTFOLIO */
+  .portfolio{background:var(--black)}
+  .portfolio-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:2.5rem 0}
+  .filter-btn{padding:8px 20px;background:transparent;border:1px solid rgba(232,226,217,.1);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+  .portfolio-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+  .portfolio-item{position:relative;overflow:hidden;cursor:pointer;background:var(--surface)}
+  .portfolio-item:nth-child(1){grid-column:span 7;grid-row:span 2;height:480px}
+  .portfolio-item:nth-child(2){grid-column:span 5;height:232px}
+  .portfolio-item:nth-child(3){grid-column:span 5;height:244px}
+  .portfolio-item:nth-child(4){grid-column:span 4;height:300px}
+  .portfolio-item:nth-child(5){grid-column:span 4;height:300px}
+  .portfolio-item:nth-child(6){grid-column:span 4;height:300px}
+  .portfolio-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94);filter:brightness(.7) saturate(.85)}
+  .portfolio-item:hover img{transform:scale(1.06);filter:brightness(.85) saturate(1)}
+  .portfolio-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,17,23,.88) 0%,transparent 55%);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:2rem}
+  .portfolio-item:hover .portfolio-overlay{opacity:1}
+  .portfolio-tag{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem}
+  .portfolio-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--beige)}
+
+  /* PROCESS */
+  .process{background:var(--charcoal);overflow:hidden}
+  .process-track{margin-top:4rem;position:relative;display:flex;gap:0}
+  .process-track::before{content:'';position:absolute;top:36px;left:36px;right:36px;height:1px;background:linear-gradient(90deg,var(--accent),rgba(200,184,154,.1),var(--accent),rgba(200,184,154,.1),var(--accent))}
+  .process-step{flex:1;padding:0 1.5rem 2rem;position:relative;transition:transform .3s}
+  .process-step:hover{transform:translateY(-8px)}
+  .step-dot{width:72px;height:72px;border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:2rem;position:relative;background:var(--charcoal);transition:all .3s}
+  .step-dot::before{content:'';position:absolute;inset:6px;background:var(--accent-dim);transition:all .3s}
+  .process-step:hover .step-dot{background:var(--accent-dim);box-shadow:0 0 30px rgba(200,184,154,.15)}
+  .step-icon{font-size:1.5rem;position:relative;z-index:1}
+  .step-num{position:absolute;top:-10px;right:-10px;font-family:'Bebas Neue',sans-serif;font-size:.8rem;color:var(--accent);background:var(--charcoal);padding:2px 6px;border:1px solid var(--glass-border)}
+  .step-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--beige);margin-bottom:.6rem}
+  .step-desc{font-size:.83rem;line-height:1.7;color:var(--muted)}
+
+  /* WHY US */
+  .why{background:var(--black)}
+  .why-grid{margin-top:4rem;display:grid;grid-template-columns:1fr 1fr;gap:4px}
+  .why-feature{padding:3rem;background:var(--surface);display:flex;gap:1.5rem;transition:all .3s;border:1px solid transparent}
+  .why-feature:hover{border-color:var(--glass-border);background:#1e2838}
+  .why-icon-wrap{flex-shrink:0;width:52px;height:52px;border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:all .3s}
+  .why-feature:hover .why-icon-wrap{border-color:var(--accent);background:var(--accent-dim)}
+  .why-text-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--beige);margin-bottom:.5rem}
+  .why-text-desc{font-size:.85rem;line-height:1.7;color:var(--muted)}
+
+  /* ABOUT */
+  .about{background:var(--charcoal);position:relative;overflow:hidden}
+  .about::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(ellipse,rgba(200,184,154,.05) 0%,transparent 70%);pointer-events:none}
+  .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+  .about-visual{position:relative;height:500px}
+  .about-img-main{width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.85);border:1px solid var(--glass-border)}
+  .about-accent-box{position:absolute;bottom:-20px;right:-20px;width:120px;height:120px;background:linear-gradient(135deg,var(--accent),var(--accent-light));display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .accent-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--black);line-height:1}
+  .accent-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(10,10,10,.7);text-align:center}
+  .about-statement{font-size:1rem;line-height:1.9;color:var(--muted);margin-bottom:2rem}
+  .about-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem}
+  .pill{padding:6px 16px;border:1px solid var(--glass-border);font-size:.75rem;letter-spacing:.1em;color:var(--text);background:var(--glass)}
+
+  /* CTA */
+  .cta-band{background:var(--black);padding:0}
+  .cta-inner{background:linear-gradient(135deg,#0d1117 0%,#161d26 50%,#0d1117 100%);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);padding:6rem 5vw;text-align:center;position:relative;overflow:hidden}
+  .cta-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(200,184,154,.06) 0%,transparent 70%)}
+  .cta-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5.5rem);letter-spacing:.05em;color:var(--beige);margin-bottom:1rem;position:relative}
+  .cta-headline span{color:var(--accent)}
+  .cta-sub{font-size:1rem;color:var(--muted);margin-bottom:2.5rem;position:relative}
+  .cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+  .btn-glow{padding:18px 44px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent-light) 100%);color:var(--black);font-family:'DM Sans',sans-serif;font-weight:500;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s;animation:glow-pulse 3s ease infinite}
+  @keyframes glow-pulse{0%,100%{box-shadow:0 0 20px rgba(200,184,154,.25)}50%{box-shadow:0 0 40px rgba(200,184,154,.45),0 0 80px rgba(200,184,154,.1)}}
+  .btn-glow:hover{transform:translateY(-3px)}
+  .btn-whatsapp{padding:18px 44px;background:transparent;border:1px solid #25d366;color:#25d366;font-family:'DM Sans',sans-serif;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s}
+  .btn-whatsapp:hover{background:rgba(37,211,102,.1);transform:translateY(-3px)}
+
+  /* CONTACT */
+  .contact{background:var(--charcoal)}
+  .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+  .contact-detail{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.5rem;padding:1.2rem 1.5rem;background:var(--glass);border:1px solid var(--glass-border);transition:all .3s}
+  .contact-detail:hover{border-color:var(--accent)}
+  .contact-detail-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+  .cd-label{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .cd-value{font-size:.9rem;color:var(--text);line-height:1.5}
+  .form-floating{background:var(--surface);border:1px solid var(--glass-border);padding:2.5rem;position:relative}
+  .form-floating::before{content:'';position:absolute;top:0;left:0;width:40%;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+  .form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem}
+  .form-group label{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+  .form-group input,.form-group select,.form-group textarea{background:var(--glass);border:1px solid rgba(232,226,217,.1);color:var(--text);padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;resize:none}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+  .form-group select option{background:var(--surface)}
+
+  /* FOOTER */
+  footer{background:var(--black);border-top:1px solid var(--glass-border);padding:4rem 5vw 2rem}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(232,226,217,.05)}
+  .footer-tagline{font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;margin-top:.75rem}
+  .footer-social{display:flex;gap:8px}
+  .social-btn{width:36px;height:36px;border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;font-size:.8rem;transition:all .3s}
+  .social-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .footer-col-title{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+  .footer-links{list-style:none}
+  .footer-links li{margin-bottom:.6rem}
+  .footer-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .3s}
+  .footer-links a:hover{color:var(--text)}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  .footer-copy{font-size:.78rem;color:var(--muted)}
+  .footer-copy span{color:var(--accent)}
+
+  /* WHATSAPP FLOAT */
+  .wa-float{position:fixed;bottom:2rem;right:2rem;z-index:200;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(37,211,102,.4);text-decoration:none;animation:wa-bounce 3s ease infinite;transition:transform .3s}
+  .wa-float:hover{transform:scale(1.1)}
+  @keyframes wa-bounce{0%,100%{box-shadow:0 8px 30px rgba(37,211,102,.4)}50%{box-shadow:0 8px 50px rgba(37,211,102,.6),0 0 80px rgba(37,211,102,.12)}}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-delay-1{transition-delay:.1s}
+  .reveal-delay-2{transition-delay:.2s}
+  .reveal-delay-3{transition-delay:.3s}
+  .reveal-delay-4{transition-delay:.4s}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .nav-links{display:none}
+    .hero-stats{display:none}
+    .hero-room{display:none}
+    .services-grid{grid-template-columns:1fr 1fr}
+    .portfolio-grid{grid-template-columns:1fr 1fr}
+    .portfolio-item{grid-column:span 1!important;grid-row:span 1!important;height:200px!important}
+    .process-track{flex-direction:column}
+    .process-track::before{display:none}
+    .why-grid{grid-template-columns:1fr}
+    .about-inner{grid-template-columns:1fr}
+    .about-visual{height:300px}
+    .contact-inner{grid-template-columns:1fr}
+    .footer-top{grid-template-columns:1fr 1fr}
+    .form-row{grid-template-columns:1fr}
+    .modal-features{grid-template-columns:1fr}
+    .modal-img-grid{grid-template-columns:1fr 1fr}
+  }
+  .btn-no-decoration{text-decoration:none;display:inline-block}
+  .section-title-margin{margin-bottom:3rem}
+  .muted-text{color:var(--muted);font-size:.82rem}
+  .link-style{text-decoration:none;color:inherit}
+  .margin-top-2{margin-top:2rem}
+  .inline-flex{display:inline-flex}
+  .btn-full{width:100%;text-align:center}
+  .text-color{color:var(--text)}
+  @media(max-width:600px){
+    section{padding:5rem 5vw}
+    .services-grid{grid-template-columns:1fr}
+    .footer-top{grid-template-columns:1fr}
+    .modal-img-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 4L32 16V32H4V16L18 4Z" stroke="#c8b89a" stroke-width="1.3" fill="rgba(200,184,154,0.06)"/>
+      <path d="M18 4L32 16M18 4L4 16" stroke="#c8b89a" stroke-width="1.3"/>
+      <path d="M13 32V22H23V32" stroke="#c8b89a" stroke-width="1.1" fill="none"/>
+      <circle cx="18" cy="13" r="1.8" fill="#c8b89a"/>
+    </svg>
+    <div class="logo-text">
+      <div class="logo-text-main"><em>G</em>any <span>Craft</span></div>
+      <div class="logo-text-sub">Space Solutions</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/919321171872" class="nav-cta" target="_blank" rel="noopener noreferrer">Free Site Visit</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-room">
+    <div class="room-wall-back"></div>
+    <div class="room-wall-side"></div>
+    <div class="room-floor"></div>
+    <div class="ceiling-light"><div class="ceiling-fixture"></div></div>
+    <div class="sofa"><div class="sofa-back"></div><div class="sofa-body"></div><div class="sofa-cushion"></div></div>
+  </div>
+  <div class="particles" id="particles"></div>
+  <div class="hero-content">
+    <h1 class="hero-headline">Design.<br><em>Build.</em><br>Transform.</h1>
+    <p class="hero-sub">Complete Interior &amp; Turnkey Solutions by Gany Craft — where every space tells a story of precision and artistry.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start Your Project</a>
+      <a href="#portfolio" class="btn-secondary">Explore Portfolio <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll to discover</div>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-num">30+</div><div class="stat-label">Projects</div></div>
+    <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Years</div></div>
+    <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Turnkey</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-intro">
+    <div>
+      <div class="section-label reveal">What We Offer</div>
+      <h2 class="section-title reveal">Crafting Spaces<br>That <em>Inspire</em></h2>
+    </div>
+    <p class="services-desc reveal">From concept to completion — every service meticulously designed to transform your space into a masterpiece.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal" onclick="openModal('3d')">
+      <div class="service-img"><img src="images/for painting.jpeg" alt="3D Interior Design" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">01</div><div class="service-name">3D Interior Design</div><p class="service-desc">Photorealistic 3D visualizations before a single nail is hammered. See your dream space before it exists.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+    <div class="service-card reveal reveal-delay-1" onclick="openModal('kitchen')">
+      <div class="service-img"><img src="images/WhatsApp Image 2026-04-08 at 3.12.46 PM (1) copy.jpeg" alt="Modular Kitchen" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">02</div><div class="service-name">Modular Kitchen</div><p class="service-desc">Sleek, functional kitchens engineered for modern living. Custom layouts with premium hardware and finishes.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+    <div class="service-card reveal reveal-delay-2" onclick="openModal('electrical')">
+      <div class="service-img"><img src="images/WhatsApp Image 2026-05-10 at 7.40.23 PM (1).jpeg" alt="Electrical Lighting" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">03</div><div class="service-name">Electrical &amp; Lighting</div><p class="service-desc">Smart electrical solutions with dramatic lighting design — the soul of any beautifully designed space.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+    <div class="service-card reveal" onclick="openModal('plumbing')">
+      <div class="service-img"><img src="images/WhatsApp Image 2026-05-01 at 10.39.39 PM.jpeg" alt="Plumbing Bathroom" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">04</div><div class="service-name">Plumbing</div><p class="service-desc">Modern plumbing systems with spa-grade bathroom setups. Precision engineering meets aesthetic design.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+    <div class="service-card reveal reveal-delay-1" onclick="openModal('painting')">
+      <div class="service-img"><img src="images/WhatsApp Image 2026-05-09 at 11.36.11 AM.jpeg" alt="Painting Textures" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">05</div><div class="service-name">Painting &amp; Textures</div><p class="service-desc">Premium wall textures, patterns, and finishes that create the perfect backdrop for your lifestyle.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+    <div class="service-card reveal reveal-delay-2" onclick="openModal('furniture')">
+      <div class="service-img"><img src="images/WhatsApp Image 2026-05-09 at 11.42.35 AM.jpeg" alt="Custom Furniture" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">06</div><div class="service-name">Custom Furniture</div><p class="service-desc">Bespoke furniture crafted to exact dimensions. Every piece designed as art, built for purpose.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+    <div class="service-card reveal" onclick="openModal('ceiling')">
+      <div class="service-img"><img src="images/for kitchenno .jpeg" alt="False Ceiling" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">07</div><div class="service-name">False Ceiling</div><p class="service-desc">Dramatic ceiling designs with integrated lighting — the crown jewel of any luxury interior.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+    <div class="service-card reveal reveal-delay-1" onclick="openModal('turnkey')">
+      <div class="service-img"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Turnkey Projects" loading="lazy"><div class="service-img-overlay"></div></div>
+      <div class="service-body"><div class="service-num">08</div><div class="service-name">Turnkey Projects</div><p class="service-desc">Complete home transformations from bare walls to move-in ready. One team, one vision, zero stress.</p><button class="service-learn">Learn More →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img id="modal-hero-img" class="modal-img" src="" alt="">
+    <div class="modal-content">
+      <div class="modal-tag" id="modal-tag"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div class="modal-img-grid" id="modal-grid"></div>
+      <div class="modal-features" id="modal-feats"></div>
+      <a href="#contact" class="btn-primary btn-no-decoration" onclick="closeModal()">Get a Free Quote →</a>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="section-label reveal">Our Work</div>
+  <h2 class="section-title reveal">Spaces We've <em>Transformed</em></h2>
+  <div class="portfolio-filters reveal">
+    <button class="filter-btn active">All Projects</button>
+    <button class="filter-btn">Living Room</button>
+    <button class="filter-btn">Bedroom</button>
+    <button class="filter-btn">Kitchen</button>
+    <button class="filter-btn">Ceiling</button>
+    <button class="filter-btn">Furniture</button>
+  </div>
+  <div class="portfolio-grid reveal">
+    <div class="portfolio-item">
+      <img src="images/WhatsApp Image 2026-04-08 at 3.12.46 PM (2).jpeg" alt="Living Room">
+      <div class="portfolio-overlay"><div><div class="portfolio-tag">Living Room</div><div class="portfolio-title">Modern Luxe Living Space</div></div></div>
+    </div>
+    <div class="portfolio-item">
+      <img src="images/WhatsApp Image 2026-04-14 at 5.08.00 PM.jpeg" alt="Kitchen">
+      <div class="portfolio-overlay"><div><div class="portfolio-tag">Kitchen</div><div class="portfolio-title">Minimalist Culinary Space</div></div></div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&q=80" alt="Bedroom">
+      <div class="portfolio-overlay"><div><div class="portfolio-tag">Bedroom</div><div class="portfolio-title">The Serene Suite</div></div></div>
+    </div>
+    <div class="portfolio-item">
+      <img src="images/WhatsApp Image 2026-05-09 at 11.12.41 AM.jpeg" alt="Ceiling">
+      <div class="portfolio-overlay"><div><div class="portfolio-tag">False Ceiling</div><div class="portfolio-title">Constellation Ceiling</div></div></div>
+    </div>
+    <div class="portfolio-item">
+      <img src="images/WhatsApp Image 2026-04-09 at 1.32.39 AM ss.jpeg" alt="Furniture">
+      <div class="portfolio-overlay"><div><div class="portfolio-tag">Custom Furniture</div><div class="portfolio-title">Bespoke Artisan Pieces</div></div></div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Turnkey">
+      <div class="portfolio-overlay"><div><div class="portfolio-tag">Turnkey</div><div class="portfolio-title">Full Home Transformation</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-label reveal">How We Work</div>
+  <h2 class="section-title reveal">The Gany Craft <em>Method</em></h2>
+  <div class="process-track">
+    <div class="process-step reveal"><div class="step-dot"><div class="step-icon">🔍</div><div class="step-num">01</div></div><div class="step-name">Discover</div><p class="step-desc">We begin by understanding your lifestyle, needs, and aspirations through an in-depth consultation and site visit.</p></div>
+    <div class="process-step reveal reveal-delay-1"><div class="step-dot"><div class="step-icon">📐</div><div class="step-num">02</div></div><div class="step-name">Design</div><p class="step-desc">Our designers craft photorealistic 3D visualizations, letting you see and refine your space before execution.</p></div>
+    <div class="process-step reveal reveal-delay-2"><div class="step-dot"><div class="step-icon">📋</div><div class="step-num">03</div></div><div class="step-name">Plan</div><p class="step-desc">Detailed project timeline, material selection, and budget finalization — complete transparency at every step.</p></div>
+    <div class="process-step reveal reveal-delay-3"><div class="step-dot"><div class="step-icon">🔨</div><div class="step-num">04</div></div><div class="step-name">Execute</div><p class="step-desc">Our skilled craftsmen bring the vision to life with precision, quality materials, and daily progress updates.</p></div>
+    <div class="process-step reveal reveal-delay-4"><div class="step-dot"><div class="step-icon">🎁</div><div class="step-num">05</div></div><div class="step-name">Deliver</div><p class="step-desc">On-time handover with a comprehensive walkthrough and warranty. Your dream space, exactly as envisioned.</p></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="section-label reveal">Why Gany Craft</div>
+  <h2 class="section-title reveal">Built on <em>Excellence</em></h2>
+  <div class="why-grid">
+    <div class="why-feature reveal"><div class="why-icon-wrap">🏆</div><div><div class="why-text-title">30+ Projects Delivered</div><p class="why-text-desc">Transforming spaces across Mumbai &amp; Navi Mumbai — from compact apartments to full-home renovations.</p></div></div>
+    <div class="why-feature reveal reveal-delay-1"><div class="why-icon-wrap">📐</div><div><div class="why-text-title">3D Before Execution</div><p class="why-text-desc">See your complete space in photorealistic 3D before any work begins. Zero surprises, maximum confidence.</p></div></div>
+    <div class="why-feature reveal reveal-delay-2"><div class="why-icon-wrap">⏰</div><div><div class="why-text-title">On-Time Delivery</div><p class="why-text-desc">Strict project timelines with real-time progress tracking. We respect your time as much as your space.</p></div></div>
+    <div class="why-feature reveal reveal-delay-3"><div class="why-icon-wrap">💎</div><div><div class="why-text-title">Premium Materials Only</div><p class="why-text-desc">Every material is hand-selected from verified vendors. Quality that looks stunning and lasts decades.</p></div></div>
+    <div class="why-feature reveal"><div class="why-icon-wrap">🛡️</div><div><div class="why-text-title">Post-Work Warranty</div><p class="why-text-desc">Comprehensive warranty on all work. Our relationship doesn't end at handover — it strengthens.</p></div></div>
+    <div class="why-feature reveal reveal-delay-1"><div class="why-icon-wrap">🔑</div><div><div class="why-text-title">True Turnkey Solutions</div><p class="why-text-desc">One point of contact for everything — design, construction, furniture, electrical, plumbing. Seamless.</p></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <img class="about-img-main" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" alt="Gany Craft Interior">
+      <div class="about-accent-box"><div class="accent-num">5+</div><div class="accent-label">Years of<br>Excellence</div></div>
+    </div>
+    <div class="about-content">
+      <div class="section-label reveal">Our Story</div>
+      <h2 class="section-title reveal">Where <em>Vision</em><br>Meets Craft</h2>
+      <p class="about-statement reveal">Gany Craft transforms spaces through creative design and precise execution, delivering modern interiors that blend functionality with aesthetics. Led by <strong class="text-color">Abdul Qadir and team</strong>, Interior Project Consultant — every project is a unique narrative, your story told through space.</p>
+      <div class="about-pills reveal">
+        <span class="pill">3D Design</span>
+        <span class="pill">Modular Kitchens</span>
+        <span class="pill">False Ceilings</span>
+        <span class="pill">Turnkey</span>
+        <span class="pill">Mumbai · Navi Mumbai</span>
+      </div>
+      <a href="#contact" class="btn-primary reveal">Book Free Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-inner">
+    <h2 class="cta-headline reveal">Ready to <span>Transform</span><br>Your Space?</h2>
+    <p class="cta-sub reveal">Book your free site visit today. No obligations, just possibilities.</p>
+    <div class="cta-buttons reveal">
+      <a href="#contact" class="btn-glow">Book Free Consultation</a>
+      <a href="https://wa.me/919321171872" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label reveal">Get In Touch</div>
+  <h2 class="section-title reveal section-title-margin">Let's <em>Create</em> Together</h2>
+  <div class="contact-inner">
+    <div>
+      <div class="contact-detail reveal"><div class="contact-detail-icon">👤</div><div><div class="cd-label">Your Consultant</div><div class="cd-value">Abdul Qadir<br><span class="muted-text">Interior Project Consultant</span></div></div></div>
+      <div class="contact-detail reveal reveal-delay-1"><div class="contact-detail-icon">📞</div><div><div class="cd-label">Phone / WhatsApp</div><div class="cd-value"><a href="tel:+919321171872" class="link-style">+91 93211 71872</a></div></div></div>
+      <div class="contact-detail reveal reveal-delay-2"><div class="contact-detail-icon">✉️</div><div><div class="cd-label">Email</div><div class="cd-value"><a href="mailto:craftgany@gmail.com" class="link-style">craftgany@gmail.com</a></div></div></div>
+      <div class="contact-detail reveal reveal-delay-3"><div class="contact-detail-icon">📍</div><div><div class="cd-label">Service Areas</div><div class="cd-value">Mumbai · Navi Mumbai<br><span class="muted-text">Sion, Grant Road, Jogeshwari, Kharghar, Mahalaxmi &amp; more</span></div></div></div>
+      <div class="contact-detail reveal reveal-delay-4"><div class="contact-detail-icon">⏱️</div><div><div class="cd-label">Working Hours</div><div class="cd-value">Mon – Sat: 9:00 AM – 7:00 PM<br>Sunday: By Appointment</div></div></div>
+      <div class="margin-top-2 reveal">
+        <a href="https://wa.me/919321171872" class="btn-whatsapp" target="_blank" rel="noopener noreferrer" class="inline-flex">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="form-floating">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Rahul"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Sharma"></div>
+        </div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
+        <div class="form-group">
+          <label>Service Required</label>
+          <select aria-label="Service Required">
+            <option value="">Select a Service</option>
+            <option>3D Interior Design</option><option>Modular Kitchen</option><option>Electrical &amp; Lighting</option><option>Plumbing</option><option>Painting &amp; Textures</option><option>Custom Furniture</option><option>False Ceiling</option><option>Turnkey Project</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Property Location</label><input type="text" placeholder="e.g. Thane, Sion, Grant Road, Kharghar..."></div>
+        <div class="form-group"><label>Tell Us About Your Project</label><textarea rows="4" placeholder="Brief description of your requirements, area size, budget range..."></textarea></div>
+        <button class="btn-primary btn-full" id="submit-btn">Book Free Site Visit →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+        <a href="#" class="nav-logo inline-flex">
+        <svg class="logo-icon" viewBox="0 0 36 36" fill="none"><path d="M18 4L32 16V32H4V16L18 4Z" stroke="#c8b89a" stroke-width="1.3" fill="rgba(200,184,154,0.06)"/><path d="M18 4L32 16M18 4L4 16" stroke="#c8b89a" stroke-width="1.3"/><path d="M13 32V22H23V32" stroke="#c8b89a" stroke-width="1.1" fill="none"/><circle cx="18" cy="13" r="1.8" fill="#c8b89a"/></svg>
+        <div class="logo-text"><div class="logo-text-main"><em>G</em>any <span>Craft</span></div><div class="logo-text-sub">Space Solutions</div></div>
+      </a>
+      <p class="footer-tagline">Transforming spaces across Mumbai &amp; Navi Mumbai through creative design and precise execution. Led by Abdul Qadir and team, Interior Project Consultant.</p>
+      <div class="footer-social"><a href="#" class="social-btn">in</a><a href="#" class="social-btn">ig</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">3D Interior Design</a></li><li><a href="#services">Modular Kitchen</a></li><li><a href="#services">Electrical</a></li><li><a href="#services">Plumbing</a></li><li><a href="#services">Painting</a></li><li><a href="#services">Custom Furniture</a></li><li><a href="#services">False Ceiling</a></li><li><a href="#services">Turnkey Projects</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:+919321171872">+91 93211 71872</a></li>
+        <li><a href="mailto:craftgany@gmail.com">craftgany@gmail.com</a></li>
+        <li><a href="#">Mumbai · Navi Mumbai</a></li>
+        <li><a href="https://wa.me/919321171872" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+        <li><a href="#about">About Abdul Qadir</a></li>
+        <li><a href="#contact">Free Site Visit</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span>Gany Craft Space Solutions</span>. All rights reserved.</div>
+    <div class="footer-copy">Privacy Policy · Terms of Service</div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/919321171872" class="wa-float" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// Particles
+const container=document.getElementById('particles');
+for(let i=0;i<20;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}%;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-duration:${Math.random()*15+10}s;animation-delay:${Math.random()*10}s;`;container.appendChild(p);}
+
+// Modal data
+const services={
+  '3d':{tag:'Service 01 · Design',title:'3D Interior Design',desc:'Before a single wall is touched, you see your home come alive in photorealistic 3D. Our designers craft immersive visualizations that let you experience light, materials, and spatial flow — refining every detail until it feels exactly right.',img:'images/for painting.jpeg',images:['https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=400&q=80','https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=400&q=80','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&q=80'],features:['Photorealistic 3D renders','Multiple design concepts','Virtual walkthrough','Material & colour palettes','Furniture placement plans','Lighting simulation']},
+  'kitchen':{tag:'Service 02 · Kitchen',title:'Modular Kitchen',desc:'We design kitchens that are as functional as they are beautiful. From European hinges to soft-close drawers and quartz countertops — every detail is engineered for the modern Indian kitchen.',img:'images/WhatsApp Image 2026-04-08 at 3.12.46 PM (1).jpeg',images:['images/WhatsApp Image 2026-05-09 at 11.23.46 AM.jpeg','https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=400&q=80','https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=400&q=80'],features:['L-shape, U-shape & island layouts','Soft-close hardware','Quartz & granite countertops','Tall unit & loft storage','Chimney & appliance integration','Anti-termite & waterproof finish']},
+  'electrical':{tag:'Service 03 · Electrical',title:'Electrical & Lighting',desc:"Lighting is the soul of interior design. We handle complete electrical rewiring, concealed conduit work, smart switches, and cinematic lighting plans that highlight your space's best features.",img:'images/WhatsApp Image 2026-05-10 at 7.40.23 PM (1).jpeg',images:['images/WhatsApp Image 2026-05-01 at 8.26.37 PM.jpeg','https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80','images/WhatsApp Image 2026-05-01 at 8.20.21 PM.jpeg'],features:['Complete electrical layout','Concealed conduit work','LED cove & strip lighting','Spot & pendant fixtures','Smart switch panels','ISI certified materials']},
+  'plumbing':{tag:'Service 04 · Plumbing',title:'Plumbing',desc:'From concealed CPVC pipework to luxury shower systems and rain showers — we create bathrooms that function flawlessly and look like a private spa.',img:'images/for splash.jpeg',images:['images/WhatsApp Image 2026-05-09 at 11.23.47 AM.jpeg','https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&q=80','https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=400&q=80'],features:['Concealed CPVC piping','Rain shower & Jacuzzi','Wall-hung EWC fitting','Anti-leakage waterproofing','Premium sanitary brands','Full bathroom renovation']},
+  'painting':{tag:'Service 05 · Painting',title:'Painting & Textures',desc:"Walls are your canvas. We offer premium paint application, decorative textures, stucco finishes, wood panelling, and wallpaper installation to create spaces with character and depth.",img:'images/WhatsApp Image 2026-05-09 at 11.36.11 AM.jpeg',images:['images/jpg file for painting.jpeg','images/for paint.jpeg','images/jpg file for painting no 2 .jpeg'],features:['Asian Paints / Berger / Dulux','Texture & stucco finishes','Feature wall designs','Wallpaper installation','Enamel & emulsion work','Waterproofing coat']},
+  'furniture':{tag:'Service 06 · Furniture',title:'Custom Furniture',desc:'Every room deserves furniture made just for it. We design and fabricate beds, wardrobes, TV units, study tables, and sofas — crafted to your exact specifications in premium materials.',img:'images/WhatsApp Image 2026-05-09 at 11.42.35 AM.jpeg',images:['https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=400&q=80','https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=400&q=80','https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&q=80'],features:['Wardrobe with sliding doors','Platform & storage beds','TV units & crockery','Study & work desks','Plywood + laminate finish','Modular & carpenter-built']},
+  'ceiling':{tag:'Service 07 · Ceiling',title:'False Ceiling',desc:"A well-designed ceiling transforms a room's entire personality. We execute gypsum, POP, and wooden false ceilings with integrated lighting, coves, and patterns that elevate any space.",img:'images/for false celling.jpeg',images:['images/WhatsApp Image 2026-05-07 at 8.39.26 PM.jpeg','images/WhatsApp Image 2026-05-07 at 8.18.32 PM.jpeg','images/false ceiling for transform.jpeg'],features:['Gypsum & POP ceilings','Cove lighting integration','Multi-level designs','Coffered & tray ceilings','Wooden & grid ceilings','Heat & moisture resistant']},
+  'turnkey':{tag:'Service 08 · Turnkey',title:'Turnkey Projects',desc:'Hand us the keys and move in to a finished home. Our end-to-end turnkey service covers design, civil work, electrical, plumbing, painting, furniture and furnishing — all under one roof.',img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80',images:['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80','https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=400&q=80','https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=400&q=80'],features:['Single point of contact','End-to-end project management','Civil + design + fit-out','Fixed budget & timeline','Move-in ready handover','Post-handover support']}
+};
+
+function openModal(key){
+  const s=services[key];
+  document.getElementById('modal-tag').textContent=s.tag;
+  document.getElementById('modal-title').textContent=s.title;
+  document.getElementById('modal-desc').textContent=s.desc;
+  const hi=document.getElementById('modal-hero-img');hi.src=s.img;hi.alt=s.title;
+  document.getElementById('modal-grid').innerHTML=s.images.map(u=>`<img src="${u}" alt="${s.title}" loading="lazy">`).join('');
+  document.getElementById('modal-feats').innerHTML=s.features.map(f=>`<div class="modal-feat">${f}</div>`).join('');
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
+function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// Scroll reveal
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+reveals.forEach(r=>obs.observe(r));
+
+// Portfolio filters
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');});});
+
+// Nav scroll
+window.addEventListener('scroll',()=>{document.getElementById('navbar').style.background=window.scrollY>80?'rgba(13,17,23,.95)':'rgba(13,17,23,.7)';});
+
+// Parallax
+window.addEventListener('scroll',()=>{const r=document.querySelector('.hero-room');if(r)r.style.transform=`translateY(calc(-50% + ${window.scrollY*.2}px))`;});
+
+// Form
+document.getElementById('submit-btn').addEventListener('click',function(){this.textContent='✓ Request Sent! Abdul will contact you shortly.';this.style.background='linear-gradient(135deg,#1e3a2a,#2a5a3a)';this.style.color='#7acc90';setTimeout(()=>{this.textContent='Book Free Site Visit →';this.style.background='';this.style.color='';},5000);});
+</script>
+</body>
+</html>
