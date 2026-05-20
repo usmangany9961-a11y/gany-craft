@@ -514,23 +514,27 @@
       </div>
     </div>
     <div class="reveal">
+      <form action="https://api.web3forms.com/submit" method="POST">
+
+<input type="hidden" name="access_key" value="0482fd3f-43a4-41d6-91ae-9c9df6f5c122">
       <div class="form-floating">
         <div class="form-row">
-          <div class="form-group"><label>First Name</label><input type="text" placeholder="Rahul"></div>
-          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Sharma"></div>
+          <div class="form-group"><label>First Name</label><input type="text" name="first_name" placeholder="Rahul"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" name="last_name" placeholder="Sharma"></div>
         </div>
-        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
-        <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="+91 98765 43210"></div>
+        <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="you@email.com"></div>
         <div class="form-group">
           <label>Service Required</label>
-          <select aria-label="Service Required">
+          <select name="service" aria-label="Service Required">
             <option value="">Select a Service</option>
             <option>3D Interior Design</option><option>Modular Kitchen</option><option>Electrical &amp; Lighting</option><option>Plumbing</option><option>Painting &amp; Textures</option><option>Custom Furniture</option><option>False Ceiling</option><option>Turnkey Project</option>
           </select>
         </div>
-        <div class="form-group"><label>Property Location</label><input type="text" placeholder="e.g. Thane, Sion, Grant Road, Kharghar..."></div>
-        <div class="form-group"><label>Tell Us About Your Project</label><textarea rows="4" placeholder="Brief description of your requirements, area size, budget range..."></textarea></div>
+        <div class="form-group"><label>Property Location</label><input type="text" name="location" placeholder="e.g. Thane, Sion"></div>
+        <div class="form-group"><label>Tell Us About Your Project</label><textarea name="message" rows="4" placeholder="Brief description of your requirements, area size, budget range..."></textarea></div>
         <button class="btn-primary btn-full" id="submit-btn">Book Free Site Visit →</button>
+        </form>
       </div>
     </div>
   </div>
